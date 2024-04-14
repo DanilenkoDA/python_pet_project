@@ -1,7 +1,8 @@
 import base as j
 import peewee
-#import inter as abc
 from tkinter import messagebox as mb
+
+
 class Truck():
     def __init__(self):
         self.name = 'not_stated'
@@ -25,16 +26,6 @@ class Record():
     def change_brn(self, brn):
         self.brn = brn
 
-def check_for_int(abc):
-    if str(abc).isdigit():
-        return True
-    return False
-
-def check_for_bul(abc):
-    if abc == 'True' or abc == 'False':
-        return True
-    return False
-
 
 class Shake():
     def __init__(self, first, second):
@@ -46,6 +37,19 @@ class Shake():
     def sav(self):
         j.Car.save(self.first)
 
+#проверка, что строка является числом
+def check_for_int(abc):
+    if str(abc).isdigit():
+        return True
+    return False
+
+#проверка, что строка является булевой переменной
+def check_for_bul(abc):
+    if abc == 'True' or abc == 'False':
+        return True
+    return False
+
+#функция вывода машин
 def show_list():
     a = list(j.Car.select())
     vsp = []
@@ -53,17 +57,20 @@ def show_list():
         vsp.append([a[i].id, a[i].name, a[i].gruz, a[i].bron_car, a[i].id_of_order_id])
     return vsp
 
+#сортировка машин по грузоподъемности по возрастанию
 def sort_for_gruz():
     my_list = show_list()
     for elem in my_list:
         my_list.sort(key = lambda elem: elem[2] )
     return my_list
 
+#сортировка машин по грузоподъемности по убыванию
 def resort():
     my_list = sort_for_gruz()
     my_list.reverse()
     return my_list
 
+#добавление заявки
 def add_order(massa, number):
     if check_for_int(massa):
         record = j.Order(massa = int(massa), number_of_klient = number, bron = False)
@@ -73,6 +80,7 @@ def add_order(massa, number):
     else:
         error()
 
+#вывод текущих заявок
 def show_order():
     a = j.Order.select()
     vsp = []
@@ -80,6 +88,7 @@ def show_order():
         vsp.append([a[i].id, a[i].massa, a[i].number_of_klient, a[i].bron])
     return vsp
 
+#вывод свободных машин
 def non_bron():
     my_list = show_order()
     non_bron_list = []
@@ -88,20 +97,24 @@ def non_bron():
             non_bron_list.append(i)
     return non_bron_list
 
+#подбор необходимых машин
 def for_connect(zapis):
     car_list1 = resort()
     car_list = []
+    neob_massa = zapis[1]
+    cars_for_bron = []
+
     for i in car_list1:
         if i[3] == False:
             car_list.append(i)
-    neob_massa = zapis[1]
-    cars_for_bron = []
+    
     for i in car_list:
         if neob_massa > 0:
             neob_massa -= i[2]
             cars_for_bron.append(i[0])
         else:
             break
+
     if neob_massa <= 0:
         for i in cars_for_bron:
             hs = i
@@ -113,15 +126,17 @@ def for_connect(zapis):
             b.bron = True
             j.Order.save(b)
 
-
+#подбор необходимых машин
 def connect():
     my_list1 = show_order()
     my_list = []
+
     for i in my_list1:
         if i[3] == False:
             my_list.append(i)
     for i in my_list:
         for_connect(i)
+
 
 def in_null():
     my_list = show_list()
@@ -130,9 +145,11 @@ def in_null():
         a.id_of_order_id = 0
         j.Car.save(a)
 
+#обработка ошибки
 def error():
     mb.showerror('Ошибка!', 'Проверьте правильность введенных данных.')
 
+#добавление машины
 def add_car(nam, gruz):
     if check_for_int(gruz):
         record = j.Car(name = nam, gruz = gruz, bron_car = False, id_of_order_id = 0)
@@ -141,6 +158,7 @@ def add_car(nam, gruz):
     else:
         error()
 
+#удаление машины
 def delete_car(id):
     if check_for_int(id):
         try:
@@ -152,6 +170,7 @@ def delete_car(id):
     else:
         error()
 
+#удаление заявки
 def delete_order(id):
     if check_for_int(id):
         try:
@@ -163,6 +182,7 @@ def delete_order(id):
     else:
         error()
 
+#вывод свободных машин
 def free_cars():
     my_list1 = show_list()
     my_list = []
@@ -170,6 +190,8 @@ def free_cars():
         if i[3] == False:
             my_list.append(i)
     return my_list
+
+#вывод занятых машин
 def unfree_cars():
     my_list1 = show_list()
     my_list = []

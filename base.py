@@ -16,13 +16,15 @@ class Order(Model):
 
 
 class Car(Model):
+    class Meta:
+        database = db
+        order_by = 'id'
+        db_table = 'cars'
+
+
     id = PrimaryKeyField(unique=True)
     name = CharField(max_length=70)
     gruz = IntegerField()
     bron_car = BooleanField()
     id_of_order = ForeignKeyField(Order, default=None)
-    class Meta:
-        database = db
-        order_by = 'id'
-        db_table = 'cars'
 

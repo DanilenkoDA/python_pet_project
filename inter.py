@@ -26,6 +26,8 @@ class Main_window():
         self.btn_ex = Button(text='Выйти', command=self.root.destroy)
         self.btn_ex.pack()
         self.root.mainloop()
+    
+    
     def add_car_int(self):
         self.wndw_add_car = Toplevel(self.root)
         self.wndw_add_car.geometry('600x600')
@@ -42,6 +44,8 @@ class Main_window():
         self.ex_car = Button(self.wndw_add_car, text='Выйти', command=lambda: self.wndw_add_car.destroy())
         self.ex_car.pack()
         self.wndw_add_car.mainloop()
+
+
     def show_free_cars(self):
         self.my_list = classes.free_cars()
         self.wndw_fr = Toplevel(self.root)
@@ -55,6 +59,8 @@ class Main_window():
         self.ex_show_cars = Button(self.wndw_fr, text='Выйти', command=self.wndw_fr.destroy)
         self.ex_show_cars.pack()
         self.wndw_fr.mainloop()
+
+
     def show_unfree_cars(self):
         self.my_list_un = classes.unfree_cars()
         if len(self.my_list_un) == 0:
@@ -71,6 +77,8 @@ class Main_window():
             self.ex_show_cars = Button(self.wndw_un, text='Выйти', command=self.wndw_un.destroy)
             self.ex_show_cars.pack()
             self.wndw_un.mainloop()
+
+
     def show_gruz_tr(self):
         self.new_wndw = Toplevel(self.root)
         self.my_gruz_list = classes.sort_for_gruz()
@@ -82,6 +90,8 @@ class Main_window():
         self.ex_srt_cars = Button(self.new_wndw, text='Выйти', command=self.new_wndw.destroy)
         self.ex_srt_cars.pack()
         self.new_wndw.mainloop()
+
+
     def delete_car(self):
         self.del_wndw = Toplevel(self.root)
         self.del_wndw.geometry('600x600')
@@ -94,6 +104,8 @@ class Main_window():
         self.btn_del_ex = Button(self.del_wndw, text='Выйти', command = self.del_wndw.destroy)
         self.btn_del_ex.pack()
         self.del_wndw.mainloop()
+
+
     def delete_order(self):
         self.del_ord = Toplevel(self.root)
         self.del_ord.geometry('600x600')
@@ -106,6 +118,8 @@ class Main_window():
         self.btn_for_ex = Button(self.del_ord, text='Выйти', command = self.del_ord.destroy)
         self.btn_for_ex.pack()
         self.del_ord.mainloop()
+
+
     def add_order(self):
         self.ord_wndw = Toplevel(self.root)
         self.ord_wndw.geometry('600x600')
@@ -122,4 +136,6 @@ class Main_window():
         self.btn1_ex = Button(self.ord_wndw, text='Выйти', command=self.ord_wndw.destroy)
         self.btn1_ex.pack()
         self.ord_wndw.mainloop()
+
+
 a = Main_window()
